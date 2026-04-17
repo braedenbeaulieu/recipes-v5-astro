@@ -1,0 +1,141 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppShell from '@/components/AppShell.astro';
+import AppSidebar from '@/components/AppSidebar.vue';
+import { getAllRecipes, getAllTags } from '@/lib/recipes';
+import type { RecipeWithSlug } from '@/types/index';
+
+const recipes = await getAllRecipes();
+const tags = await getAllTags();
+
+interface RecipeItem {
+  title: string;
+  path: string;
+  slug: string;
+  category: string;
+  description?: string;
+  prepTime?: string;
+  totalTime?: string;
+  servings?: string | number;
+  difficulty?: string;
+}
+
+const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
+  return {
+    title: recipe.data.title,
+    path: `/recipes/${recipe.slug}/`,
+    slug: recipe.slug,
+    category: recipe.data.category || 'uncategorized',
+    description: recipe.data.description,
+    prepTime: recipe.data.prepTime,
+    totalTime: recipe.data.totalTime,
+    servings: recipe.data.servings,
+    difficulty: recipe.data.difficulty
+  };
+});
+
+const tagCounts: Record<string, number> = {};
+recipes.forEach((recipe) => {
+  if (recipe.data.tags && Array.isArray(recipe.data.tags)) {
+    recipe.data.tags.forEach((tag) => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+    });
+  }
+});
+
+const tagsList = tags.map((tag) => ({
+  name: tag,
+  count: tagCounts[tag] || 0
+}));
+---
+
+<BaseLayout title="Tags" description="Browse recipes by tag.">
+  <AppShell>
+    <fragment slot="sidebar">
+      <AppSidebar client:load items={recipeItems} />
+    </fragment>
+
+    <main class="content-area">
+      <header class="page-header">
+        <h1>Tags</h1>
+        <p>Browse recipes by tag.</p>
+      </header>
+
+      <div class="tags-list">
+        {
+          tagsList.map((tag) => (
+            <a href={`/tags/${tag.name}/`} class="tag-item">
+              <span class="tag-name">{tag.name}</span>
+              <span class="tag-count">{tag.count}</span>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </AppShell>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 1.5rem clamp(0.75rem, 2.5vw, 2rem) 0;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-header p {
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 2rem clamp(0.75rem, 2.5vw, 2rem);
+  }
+
+  .tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+  }
+
+  .tag-item:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tag-name {
+    font-weight: 500;
+  }
+
+  .tag-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.375rem;
+    background: var(--accent);
+    color: var(--accent-text);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .tag-item:hover .tag-count {
+    background: var(--accent);
+  }
+</style>

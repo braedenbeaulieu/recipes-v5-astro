@@ -1,0 +1,82 @@
+---
+interface Props {
+  hasToc?: boolean;
+}
+
+const { hasToc = false } = Astro.props;
+---
+
+<div class="app-shell" class:list={{ 'has-toc': hasToc }}>
+  <slot name="sidebar" />
+
+  <main class="content-area">
+    <slot />
+  </main>
+
+  {hasToc && <slot name="toc" />}
+</div>
+
+<style lang="scss">
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-rows: 1fr;
+  gap: 1.25rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.app-shell.has-toc {
+  grid-template-columns: 300px minmax(0, 1fr) 260px;
+}
+
+.content-area {
+  min-width: 0;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+  overflow-y: auto;
+}
+
+/* Sidebar scroll styling */
+.app-shell > :first-child {
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* TOC sidebar scroll styling */
+.app-shell.has-toc > :last-child {
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  position: sticky;
+  top: 1.5rem;
+}
+
+@media (max-width: 1180px) {
+  .app-shell {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .app-shell.has-toc {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .content-area {
+    border-radius: 0 22px 22px 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    display: block;
+    padding: 1rem;
+  }
+
+  .content-area {
+    padding-top: 1.25rem;
+    border-radius: 22px;
+  }
+}
+</style>

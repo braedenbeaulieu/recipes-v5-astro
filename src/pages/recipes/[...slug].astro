@@ -1,0 +1,187 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppShell from '@/components/AppShell.astro';
+import AppSidebar from '@/components/AppSidebar.vue';
+import AppToc from '@/components/AppToc.vue';
+import RecipePageHeader from '@/components/RecipePageHeader.vue';
+import GroceryListButton from '@/components/GroceryListButton.vue';
+import IngredientToast from '@/components/IngredientToast.vue';
+import { getAllRecipes, getRecipeBySlug, getRecipeNavigation, getAllCategories } from '@/lib/recipes';
+import type { RecipeWithSlug } from '@/types/index';
+
+export async function getStaticPaths() {
+  const categories = await getAllCategories();
+  const paths = [];
+  
+  for (const category of categories) {
+    const recipes = await getCollection('recipes', ({ id }) => id.startsWith(`${category}/`));
+    for (const recipe of recipes) {
+      paths.push({
+        params: { slug: recipe.id },
+        props: { slug: recipe.id }
+      });
+    }
+  }
+  
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return new Response('Not found', { status: 404 });
+}
+
+const recipe = await getRecipeBySlug(slug);
+
+if (!recipe) {
+  return new Response('Not found', { status: 404 });
+}
+
+const { Content, headings } = await render(recipe);
+
+const recipes = await getAllRecipes();
+interface RecipeItem {
+  title: string;
+  path: string;
+  slug: string;
+  category: string;
+  description?: string;
+  prepTime?: string;
+  totalTime?: string;
+  servings?: string | number;
+  difficulty?: string;
+}
+
+const recipeItems: RecipeItem[] = recipes.map((r: RecipeWithSlug) => {
+  const [category, ...rest] = r.slug.split('/');
+  return {
+    title: r.data.title,
+    path: `/recipes/${r.slug}/`,
+    slug: r.slug,
+    category: category || 'uncategorized',
+    description: r.data.description,
+    prepTime: r.data.prepTime,
+    totalTime: r.data.totalTime,
+    servings: r.data.servings,
+    difficulty: r.data.difficulty
+  };
+});
+
+// Build TOC from headings
+const toc = headings.map((heading: any) => ({
+  depth: heading.depth,
+  text: heading.text,
+  id: heading.slug
+}));
+
+const currentPath = `/recipes/${slug}/`;
+
+const categorySlug = slug.split('/')[0];
+
+const nav = await getRecipeNavigation(slug);
+---
+
+<BaseLayout 
+  title={recipe.data.title}
+  description={recipe.data.description || `Recipe for ${recipe.data.title}`}
+>
+  <AppShell hasToc={true}>
+    <fragment slot="sidebar">
+      <AppSidebar client:load items={recipeItems} currentPath={currentPath} />
+    </fragment>
+
+    <article class="recipe-page">
+      <RecipePageHeader 
+        client:load
+        recipePage={recipe.data}
+        categorySlug={categorySlug}
+      />
+
+      <div class="recipe-content">
+        <Content />
+      </div>
+    </article>
+
+    <div slot="toc">
+      <AppToc client:load links={toc} />
+    </div>
+  </AppShell>
+</BaseLayout>
+
+<style>
+  .recipe-page {
+    max-width: 860px;
+  }
+
+  :global(main.content-area) {
+    padding: 1.5rem clamp(0.75rem, 2.5vw, 2rem) 3rem;
+  }
+
+  @media (max-width: 1180px) {
+    .recipe-page {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    :global(main.content-area) {
+      padding: 1.25rem 1rem 2.5rem;
+    }
+  }
+
+  .recipe-content {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) + 4px);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    box-shadow: var(--shadow);
+  }
+
+  :deep(.recipe-content h2),
+  :deep(.recipe-content h3),
+  :deep(.recipe-content h4) {
+    scroll-margin-top: 1.5rem;
+  }
+
+  :deep(.recipe-content h2) {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  :deep(.recipe-content h3) {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+  }
+
+  :deep(.recipe-content h4) {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  :deep(.recipe-content ul),
+  :deep(.recipe-content ol) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+
+  :deep(.recipe-content li) {
+    margin: 0.5rem 0;
+  }
+
+  :deep(.recipe-content p) {
+    margin: 1rem 0;
+    line-height: 1.6;
+  }
+
+  :deep(.recipe-content strong) {
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>
