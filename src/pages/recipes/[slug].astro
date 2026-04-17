@@ -1,21 +1,31 @@
 ---
-import { render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
-import AppToc from '@/components/AppToc.vue';
-import RecipePageHeader from '@/components/RecipePageHeader.vue';
+import AppToc from '@/components/AppToc.astro';
+import RecipePageHeader from '@/components/RecipePageHeader.astro';
+import KeepAwakeToggle from '@/components/KeepAwakeToggle.vue';
 import GroceryListButton from '@/components/GroceryListButton.vue';
-import IngredientToast from '@/components/IngredientToast.vue';
-import { getAllRecipes, getRecipeBySlug, getRecipeNavigation } from '@/lib/recipes';
+import RecipeContentEnhancer from '@/components/RecipeContentEnhancer.vue';
+import { getAllRecipes, getRecipeBySlug, getRecipeNavigation, getAllCategories } from '@/lib/recipes';
 import type { RecipeWithSlug } from '@/types/index';
 
 export async function getStaticPaths() {
-  const recipes = await getAllRecipes();
-  return recipes.map((recipe) => ({
-    params: { slug: recipe.slug },
-    props: { slug: recipe.slug }
-  }));
+  const categories = await getAllCategories();
+  const paths = [];
+  
+  for (const category of categories) {
+    const recipes = await getCollection('recipes', ({ id }) => id.startsWith(`${category}/`));
+    for (const recipe of recipes) {
+      paths.push({
+        params: { slug: recipe.id },
+        props: { slug: recipe.id }
+      });
+    }
+  }
+  
+  return paths;
 }
 
 const { slug } = Astro.params;
@@ -46,11 +56,12 @@ interface RecipeItem {
 }
 
 const recipeItems: RecipeItem[] = recipes.map((r: RecipeWithSlug) => {
+  const [category, ...rest] = r.slug.split('/');
   return {
     title: r.data.title,
     path: `/recipes/${r.slug}/`,
     slug: r.slug,
-    category: r.data.category || 'uncategorized',
+    category: category || 'uncategorized',
     description: r.data.description,
     prepTime: r.data.prepTime,
     totalTime: r.data.totalTime,
@@ -67,7 +78,8 @@ const toc = headings.map((heading: any) => ({
 }));
 
 const currentPath = `/recipes/${slug}/`;
-const categorySlug = recipe.data.category || 'uncategorized';
+
+const categorySlug = slug.split('/')[0];
 
 const nav = await getRecipeNavigation(slug);
 ---
@@ -83,10 +95,14 @@ const nav = await getRecipeNavigation(slug);
 
     <article class="recipe-page">
       <RecipePageHeader 
-        client:load
         recipePage={recipe.data}
         categorySlug={categorySlug}
-      />
+      >
+        <div slot="actions" class="recipe-actions-container">
+          <KeepAwakeToggle client:load />
+          <GroceryListButton client:load />
+        </div>
+      </RecipePageHeader>
 
       <div class="recipe-content">
         <Content />
@@ -94,9 +110,11 @@ const nav = await getRecipeNavigation(slug);
     </article>
 
     <div slot="toc">
-      <AppToc client:load links={toc} />
+      <AppToc links={toc} />
     </div>
   </AppShell>
+
+  <RecipeContentEnhancer client:load slug={slug} />
 </BaseLayout>
 
 <style>

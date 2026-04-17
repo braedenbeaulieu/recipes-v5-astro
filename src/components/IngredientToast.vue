@@ -26,7 +26,7 @@ defineProps<{
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .ingredient-toast {
   position: fixed;
   left: 50%;

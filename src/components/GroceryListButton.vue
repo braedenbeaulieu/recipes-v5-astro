@@ -15,6 +15,7 @@ const markdownText = computed(() => listItems.value.map((name) => `- ${name}`).j
 const errorText = ref<string | null>(null)
 const copyStatus = ref<'idle' | 'copied'>('idle')
 const mounted = ref(false)
+const resolvedContentRoot = ref<HTMLElement | null>(props.contentRoot || null)
 
 const normalizeHeading = (value: string) => value.replace(/\s+/g, ' ').trim().toLowerCase()
 
@@ -73,7 +74,7 @@ const toTitleCaseIfLower = (value: string) => {
 }
 
 const buildGroceryListMarkdown = () => {
-  const root = props.contentRoot
+  const root = resolvedContentRoot.value
   if(!root) {
     listItems.value = []
     errorText.value = 'Recipe content not ready yet.'
@@ -174,6 +175,14 @@ watch(isOpen, (value) => {
 
 onMounted(() => {
   mounted.value = true
+  
+  // Auto-find contentRoot if not provided
+  if (!resolvedContentRoot.value) {
+    const root = document.querySelector('.recipe-content') as HTMLElement | null
+    if (root) {
+      resolvedContentRoot.value = root
+    }
+  }
 })
 </script>
 

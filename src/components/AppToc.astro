@@ -1,0 +1,153 @@
+---
+interface HeadingLink {
+  id: string
+  depth: number
+  text: string
+  children?: Array<{
+    id: string
+    depth: number
+    text: string
+  }>
+}
+
+interface Props {
+  links?: HeadingLink[]
+}
+
+const { links } = Astro.props
+---
+
+{links?.length && (
+  <aside class="toc">
+    <div class="toc__scroll">
+      <div class="toc__inner">
+        <p class="toc__title">On the menu</p>
+        <ul class="toc__list">
+          {links.map((link) => (
+            <li>
+              <a href={`#${link.id}`} class={`toc__link depth-${link.depth}`}>
+                {link.text}
+              </a>
+              {link.children?.length && (
+                <ul class="toc__children">
+                  {link.children.map((child) => (
+                    <li>
+                      <a href={`#${child.id}`} class={`toc__link depth-${child.depth}`}>
+                        {child.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </aside>
+)}
+
+<style>
+  .toc {
+    position: sticky;
+    top: 1.5rem;
+    height: calc(100vh - 3rem);
+    overflow: hidden;
+    padding: 0;
+    background: var(--toc-bg);
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .toc__scroll {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+  }
+
+  .toc__scroll::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .toc__scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc__scroll::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .toc__scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+    background-clip: content-box;
+  }
+
+  .toc__scroll {
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+    scrollbar-width: thin;
+  }
+
+  .toc__inner {
+    padding: 1.25rem;
+  }
+
+  .toc__title {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    color: var(--text);
+    margin-top: 0;
+  }
+
+  .toc__list,
+  .toc__children {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc__children {
+    margin-left: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .toc__link {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    margin: 0.15rem 0;
+    color: var(--text);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    transition: all 150ms ease;
+  }
+
+  .toc__link:hover {
+    color: var(--accent);
+    background: var(--surface-subtle);
+  }
+
+  .toc__link.depth-1 {
+    font-weight: 500;
+    padding-left: 0.5rem;
+  }
+
+  .toc__link.depth-2 {
+    font-size: 0.9em;
+    padding-left: 1rem;
+  }
+
+  .toc__link.depth-3 {
+    font-size: 0.85em;
+    padding-left: 1.5rem;
+    color: var(--muted);
+  }
+</style>

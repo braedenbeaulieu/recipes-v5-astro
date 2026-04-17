@@ -342,14 +342,18 @@ export const useIngredientEnhancements = (
 
     const root = contentRoot.value
     if(!root) {
+      console.debug('[useIngredientEnhancements] contentRoot not set')
       return
     }
 
     await nextTick()
 
     ingredientIndex = getIngredientIndexFromDom(root)
+    console.debug('[useIngredientEnhancements] ingredientIndex.names:', ingredientIndex.names)
+    
     markIngredientsSection(root)
     enhanceDirectionsWithIngredientButtons(root, ingredientIndex)
+    console.debug('[useIngredientEnhancements] Enhancement applied')
 
     if(!clickListenerAttached) {
       root.addEventListener('click', onRecipeContentClick)
@@ -358,6 +362,14 @@ export const useIngredientEnhancements = (
   }
 
   onMounted(() => {
+    applyIngredientEnhancements()
+  })
+
+  watch(() => contentRoot.value, (value) => {
+    if(!value) {
+      return
+    }
+
     applyIngredientEnhancements()
   })
 
