@@ -10,7 +10,7 @@ const props = defineProps<{
 const contentRoot = ref<HTMLElement | null>(null)
 const recipePath = computed(() => props.slug)
 
-const { ingredientToast, ingredientToastPosition } = useIngredientEnhancements(
+const { ingredientToast, ingredientToastPosition, applyIngredientEnhancements } = useIngredientEnhancements(
   contentRoot,
   recipePath
 )
@@ -23,6 +23,7 @@ const findContentRoot = () => {
   const root = document.querySelector('.recipe-content') as HTMLElement | null
   if (root) {
     contentRoot.value = root
+    applyIngredientEnhancements()
     cleanup()
     return true
   }

@@ -1,4 +1,4 @@
-import { nextTick, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
 
 type IngredientIndex = {
   names: string[]
@@ -40,6 +40,7 @@ const getSectionElements = (root: HTMLElement, title: string) => {
 }
 
 const getIngredientIndexFromDom = (root: HTMLElement): IngredientIndex => {
+  const headings = Array.from(root.querySelectorAll('h1,h2,h3,h4,h5,h6'))
   const sectionElements = getSectionElements(root, 'Ingredients')
   const amountByName = new Map<string, string>()
   const namesSet = new Set<string>()
@@ -236,8 +237,8 @@ export const useIngredientEnhancements = (
     const rect = toastAnchorElement.getBoundingClientRect()
     const margin = 16
     const left = Math.min(Math.max(rect.left + rect.width / 2, margin), window.innerWidth - margin)
-    const placement: IngredientToastPlacement = rect.top < 120 ? 'below' : 'above'
-    const top = placement === 'below' ? rect.bottom : rect.top
+    const placement: IngredientToastPlacement = 'above'
+    const top = rect.top
 
     ingredientToastPosition.value = { left, top, placement }
   }
@@ -336,24 +337,24 @@ export const useIngredientEnhancements = (
   }
 
   const applyIngredientEnhancements = async () => {
-    if(!import.meta.client) {
-      return
-    }
+  console.log('[useIngredientEnhancements] applyIngredientEnhancements called')
+  console.log('import.meta.client:', import.meta.client)
 
-    const root = contentRoot.value
-    if(!root) {
-      console.debug('[useIngredientEnhancements] contentRoot not set')
-      return
-    }
+  const root = contentRoot.value
+  console.log('[useIngredientEnhancements] root element:', root, 'tagName:', root?.tagName, 'className:', root?.className)
+  if(!root) {
+    console.log('[useIngredientEnhancements] contentRoot not set')
+    return
+  }
 
-    await nextTick()
-
+try {
     ingredientIndex = getIngredientIndexFromDom(root)
-    console.debug('[useIngredientEnhancements] ingredientIndex.names:', ingredientIndex.names)
+  } catch (error) {
+    console.error('[useIngredientEnhancements] Error in getIngredientIndexFromDom:', error)
+  }
     
     markIngredientsSection(root)
     enhanceDirectionsWithIngredientButtons(root, ingredientIndex)
-    console.debug('[useIngredientEnhancements] Enhancement applied')
 
     if(!clickListenerAttached) {
       root.addEventListener('click', onRecipeContentClick)

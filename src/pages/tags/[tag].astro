@@ -16,6 +16,8 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 
+console.log(tag)
+
 if (!tag) {
   return new Response('Not found', { status: 404 });
 }
@@ -133,10 +135,11 @@ const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
 
 <style>
   .page-header {
-    padding: 1.5rem clamp(0.75rem, 2.5vw, 2rem) 0;
+    padding: 0;
   }
 
   .page-header h1 {
+    margin-top: 0;
     font-size: clamp(1.75rem, 5vw, 2.5rem);
     margin-bottom: 0.5rem;
   }

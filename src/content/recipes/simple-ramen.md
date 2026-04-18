@@ -10,7 +10,7 @@ difficulty: Easy
 tags:
     - ramen
     - chicken
-    - quick meal
+    - quick-meal
 published: true
 ---
 

@@ -5,9 +5,5 @@ import vue from '@astrojs/vue';
 export default defineConfig({
   integrations: [vue()],
   output: 'static',
-  vite: {
-    ssr: {
-      external: ['simplebar-vue']
-    }
-  }
+  compressHTML: true
 });

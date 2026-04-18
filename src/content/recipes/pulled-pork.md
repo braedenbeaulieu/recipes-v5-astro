@@ -10,7 +10,7 @@ difficulty: Easy
 tags:
     - dinner
     - sandwiches
-    - slow cooked
+    - slow-cooker
 published: true
 ---
 

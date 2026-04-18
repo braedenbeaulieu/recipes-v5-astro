@@ -10,7 +10,7 @@ difficulty: Easy
 tags:
     - dinner
     - baked
-    - comfort food
+    - comfort-food
 published: true
 ---
 

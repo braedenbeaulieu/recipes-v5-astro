@@ -18,7 +18,7 @@ interface RecipeItem {
   category: string;
   description?: string;
   prepTime?: string;
-  totalTime?: string;
+  cookTime?: string;
   servings?: string | number;
   difficulty?: string;
 }
@@ -31,7 +31,7 @@ const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
     category: recipe.data.category || 'uncategorized',
     description: recipe.data.description,
     prepTime: recipe.data.prepTime,
-    totalTime: recipe.data.totalTime,
+    cookTime: recipe.data.cookTime,
     servings: recipe.data.servings,
     difficulty: recipe.data.difficulty
   };
@@ -93,10 +93,10 @@ recipeItems.forEach((item) => {
                             <dd>{formatDuration(recipe.prepTime)}</dd>
                           </div>
                         )}
-                        {recipe.totalTime && (
+                        {recipe.cookTime && (
                           <div>
                             <dt class="meta-term">
-                              <span class="screen-reader-text">Total</span>
+                              <span class="screen-reader-text">Cook</span>
                               <svg
                                 width="32"
                                 height="32"
@@ -114,7 +114,7 @@ recipeItems.forEach((item) => {
                                 </g>
                               </svg>
                             </dt>
-                            <dd>{formatDuration(recipe.totalTime)}</dd>
+                            <dd>{formatDuration(recipe.cookTime)}</dd>
                           </div>
                         )}
                       </dl>
@@ -133,10 +133,11 @@ recipeItems.forEach((item) => {
 
 <style>
   .page-header {
-    padding: 1.5rem clamp(0.75rem, 2.5vw, 2rem) 0;
+    padding: 0;
   }
 
   .page-header h1 {
+    margin-top: 0;
     font-size: clamp(1.75rem, 5vw, 2.5rem);
     margin-bottom: 0.5rem;
   }

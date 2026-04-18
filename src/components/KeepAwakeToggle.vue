@@ -223,6 +223,8 @@ watch(keepScreenAwake, (value) => {
 .keep-awake-toggle__control {
   position: relative;
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .keep-awake-toggle__input {

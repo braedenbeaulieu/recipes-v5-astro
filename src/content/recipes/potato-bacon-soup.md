@@ -10,7 +10,7 @@ servings: 8
 difficulty: Easy
 tags:
     - soup
-    - comfort food
+    - comfort-food
     - dinner
 published: true
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { formatCategory } from '@/utils/formatCategory'
 
 interface SidebarItem {
@@ -108,6 +108,22 @@ const groupedItems = computed(() => {
   }, {})
 })
 
+const openCategories = reactive<Record<string, boolean>>({})
+
+watch(groupedItems, (newGrouped) => {
+  for (const cat in newGrouped) {
+    if (newGrouped[cat].length > 0) {
+      openCategories[cat] = true;
+    }
+  }
+}, { immediate: true })
+
+const isCategoryOpen = (cat: string) => openCategories[cat] ?? true
+
+const toggleCategory = (cat: string) => {
+  openCategories[cat] = !isCategoryOpen(cat)
+}
+
 </script>
 
 <template>
@@ -159,20 +175,31 @@ const groupedItems = computed(() => {
 
         <nav class="sidebar__nav" aria-label="Recipe navigation">
           <section v-for="(group, category) in groupedItems" :key="category" class="sidebar__group">
-            <h2 class="sidebar__heading">
-              <a :href="`/categories/${category}/`">{{ formatCategory(category) }}</a>
+            <h2 class="sidebar__heading" @click="toggleCategory(category)">
+              <a :href="`/categories/${category}/`" @click.stop>{{ formatCategory(category) }}</a>
+              <svg class="sidebar__arrow" :class="{ 'is-open': isCategoryOpen(category) }" width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </h2>
-            <ul class="sidebar__list">
-              <li v-for="item in group" :key="item.path">
-                <a
-                  :href="item.path"
-                  class="sidebar__link"
-                  :class="{ 'is-active': item.path === currentPath }"
-                >
-                  {{ item.title }}
-                </a>
-              </li>
-            </ul>
+            <Transition
+              name="sidebar-accordion"
+              @enter="onAccordionEnter"
+              @after-enter="onAccordionAfterEnter"
+              @leave="onAccordionLeave"
+              @after-leave="onAccordionAfterLeave"
+            >
+              <ul v-show="isCategoryOpen(category)" class="sidebar__list">
+                <li v-for="item in group" :key="item.path">
+                  <a
+                    :href="item.path"
+                    class="sidebar__link"
+                    :class="{ 'is-active': item.path === currentPath }"
+                  >
+                    {{ item.title }}
+                  </a>
+                </li>
+              </ul>
+            </Transition>
           </section>
 
           <p v-if="!filteredItems.length" class="sidebar__empty">No recipes match your search.</p>
@@ -279,11 +306,31 @@ const groupedItems = computed(() => {
 }
 
 .sidebar__heading {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
   color: var(--text);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin: 0;
+}
+
+.sidebar__heading a {
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.sidebar__arrow {
+  transition: transform 0.15s ease;
+  margin-left: 0.5rem;
+}
+
+.sidebar__arrow.is-open {
+  transform: rotate(180deg);
 }
 
 .sidebar-accordion-enter-active,

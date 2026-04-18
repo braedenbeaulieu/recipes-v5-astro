@@ -10,7 +10,7 @@ difficulty: Easy
 tags:
     - dinner
     - chili
-    - comfort food
+    - comfort-food
 published: true
 ---
 

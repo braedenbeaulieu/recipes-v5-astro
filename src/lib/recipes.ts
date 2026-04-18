@@ -44,7 +44,6 @@ export async function getAllTags(): Promise<string[]> {
       recipe.data.tags.forEach((tag) => tags.add(tag));
     }
   }
-
   return Array.from(tags).sort();
 }
 

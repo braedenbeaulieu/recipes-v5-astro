@@ -11,7 +11,7 @@ difficulty: Easy
 tags:
   - rice
   - pork
-  - stir fry
+  - stir-fry
 published: true
 
 ---

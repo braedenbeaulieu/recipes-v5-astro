@@ -9,7 +9,7 @@ servings: 8
 difficulty: Easy
 tags:
     - soup
-    - instant pot
+    - instant-pot
     - dinner
 published: true
 ---
@@ -30,7 +30,7 @@ published: true
 
 ## Tools
 
-- Instant Pot or slow cooker
+- instant-pot or slow cooker
 - Forks for shredding
 - Measuring cups
 - Ladle

@@ -9,8 +9,8 @@ servings: 4
 difficulty: Easy
 tags:
   - dinner
-  - instant pot
-  - comfort food
+  - instant-pot
+  - comfort-food
 published: true
 ---
 
@@ -31,7 +31,7 @@ published: true
 
 ## Tools
 
-- Instant Pot or pressure cooker
+- instant-pot or pressure cooker
 - Wooden spoon or spatula
 - Knife and cutting board
 - Measuring cups and spoons

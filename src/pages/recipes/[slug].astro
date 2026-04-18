@@ -12,17 +12,14 @@ import { getAllRecipes, getRecipeBySlug, getRecipeNavigation, getAllCategories }
 import type { RecipeWithSlug } from '@/types/index';
 
 export async function getStaticPaths() {
-  const categories = await getAllCategories();
+  const recipes = await getCollection('recipes');
   const paths = [];
   
-  for (const category of categories) {
-    const recipes = await getCollection('recipes', ({ id }) => id.startsWith(`${category}/`));
-    for (const recipe of recipes) {
-      paths.push({
-        params: { slug: recipe.id },
-        props: { slug: recipe.id }
-      });
-    }
+  for (const recipe of recipes) {
+    paths.push({
+      params: { slug: recipe.id },
+      props: { slug: recipe.id }
+    });
   }
   
   return paths;
@@ -56,12 +53,11 @@ interface RecipeItem {
 }
 
 const recipeItems: RecipeItem[] = recipes.map((r: RecipeWithSlug) => {
-  const [category, ...rest] = r.slug.split('/');
   return {
     title: r.data.title,
     path: `/recipes/${r.slug}/`,
     slug: r.slug,
-    category: category || 'uncategorized',
+    category: r.data.category || 'uncategorized',
     description: r.data.description,
     prepTime: r.data.prepTime,
     totalTime: r.data.totalTime,
@@ -79,7 +75,7 @@ const toc = headings.map((heading: any) => ({
 
 const currentPath = `/recipes/${slug}/`;
 
-const categorySlug = slug.split('/')[0];
+const categorySlug = recipe.data.category || 'uncategorized';
 
 const nav = await getRecipeNavigation(slug);
 ---
@@ -187,8 +183,10 @@ const nav = await getRecipeNavigation(slug);
     line-height: 1.6;
   }
 
-  :deep(.recipe-content strong) {
-    font-weight: 600;
-    color: var(--accent);
+  .recipe-actions-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 20px;
   }
 </style>

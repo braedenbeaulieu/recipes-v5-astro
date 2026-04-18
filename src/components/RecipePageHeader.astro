@@ -1,6 +1,8 @@
 ---
 import type { RecipeData } from '@/types/index'
 import RecipeMeta from '@/components/RecipeMeta.astro'
+import { formatCategory } from '@/utils/formatCategory'
+import { slugifyTag } from '@/utils/slugifyTag'
 
 interface Props {
   recipePage: RecipeData
@@ -8,19 +10,11 @@ interface Props {
 }
 
 const { recipePage, categorySlug } = Astro.props
-
-const slugifyTag = (value: string) =>
-  value
-    .toLowerCase()
-    .trim()
-    .replace(/['"]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
 ---
 
 <header class="page-header page-header--recipe">
   <p class="page-header__eyebrow">
-    <a href={`/categories/${categorySlug}/`}>{categorySlug}</a>
+    <a href={`/categories/${categorySlug}/`}>{formatCategory(categorySlug)}</a>
   </p>
   <h1>{recipePage.title}</h1>
   {recipePage.description && <p>{recipePage.description}</p>}
@@ -62,6 +56,7 @@ const slugifyTag = (value: string) =>
   }
 
   .page-header h1 {
+    margin-top: 0;
     margin: 0.35rem 0 0.5rem;
     font-size: clamp(2rem, 4vw, 3rem);
   }
@@ -87,7 +82,8 @@ const slugifyTag = (value: string) =>
     font-size: 0.85rem;
   }
 
-  .recipe-actions {
+  .recipe-actions > * {
+    background-color: red;
     display: grid;
     align-items: center;
     justify-content: center;

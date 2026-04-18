@@ -10,7 +10,7 @@ difficulty: Medium
 tags:
     - bread
     - baking
-    - dutch oven
+    - dutch-oven
 published: true
 ---
 
