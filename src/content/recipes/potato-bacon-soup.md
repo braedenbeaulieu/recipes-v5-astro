@@ -35,7 +35,7 @@ published: true
 
 ## Directions
 
-### Cook the bacon
+### Starting off
 
 In a Dutch oven, cook the bacon over medium heat until crisp. Remove the it and set aside.
 

@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import type { Recipe, RecipeWithSlug, CategoryRecipes } from '@/types/index';
+import type { RecipeData, RecipeWithSlug, Recipes } from '@/types/index';
 
 /**
  * Get all published recipes sorted by title
@@ -17,9 +17,9 @@ export async function getAllRecipes(): Promise<RecipeWithSlug[]> {
 /**
  * Get recipes grouped by category (from frontmatter)
  */
-export async function getRecipesByCategory(): Promise<CategoryRecipes> {
+export async function getRecipesByCategory(): Promise<Recipes> {
   const recipes = await getAllRecipes();
-  const grouped: CategoryRecipes = {};
+  const grouped: Recipes = {};
 
   for (const recipe of recipes) {
     const category = recipe.data.category || 'uncategorized';

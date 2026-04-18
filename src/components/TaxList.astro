@@ -1,0 +1,71 @@
+---
+import type { TaxTerm } from '../types/index'
+
+import { slugify } from '@/utils/slugify';
+import { formatTaxName } from '@/utils/formatTaxName';
+
+const { terms, slug } = Astro.props
+---
+
+<div class="tax-list">
+    {
+        terms.map((term: TaxTerm) => (
+            <a href={`/${slug}/${slugify(term.name)}/`} class="tax-term">
+                <span class="tax-name">{formatTaxName(term.name)}</span>
+                <span class="tax-count">{term.count}</span>
+            </a>
+        ))
+    }
+</div>
+
+<style lang="scss">
+  .tax-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 2rem 0;
+  }
+
+  .tax-term {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+  }
+
+  .tax-term:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tax-name {
+    font-weight: 500;
+  }
+
+  .tax-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.375rem;
+    border: 1px solid var(--accent);
+    color: var(--accent-text);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .tax-term:hover .tax-count {
+    background: var(--accent);
+    color: white
+  }
+</style>

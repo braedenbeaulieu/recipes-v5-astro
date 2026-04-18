@@ -108,7 +108,7 @@ const enhanceDirectionsWithIngredientButtons = (root: HTMLElement, ingredientInd
     return
   }
 
-  const ignoredParents = new Set(['A', 'BUTTON', 'CODE', 'PRE', 'SCRIPT', 'STYLE'])
+  const ignoredParents = new Set(['A', 'BUTTON', 'CODE', 'PRE', 'SCRIPT', 'STYLE', 'H2', 'H3', 'H4'])
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode: (node) => {
       const parent = node.parentElement
@@ -218,6 +218,7 @@ export const useIngredientEnhancements = (
   let windowListenersAttached = false
 
   const updateToastPosition = () => {
+    // @ts-ignore
     if(!import.meta.client) {
       return
     }
@@ -244,6 +245,7 @@ export const useIngredientEnhancements = (
   }
 
   const scheduleToastPositionUpdate = () => {
+    // @ts-ignore
     if(!import.meta.client) {
       return
     }
@@ -259,6 +261,7 @@ export const useIngredientEnhancements = (
   }
 
   const attachWindowListeners = () => {
+    // @ts-ignore
     if(!import.meta.client || windowListenersAttached) {
       return
     }
@@ -269,6 +272,7 @@ export const useIngredientEnhancements = (
   }
 
   const detachWindowListeners = () => {
+    // @ts-ignore
     if(!import.meta.client || !windowListenersAttached) {
       return
     }
@@ -337,24 +341,22 @@ export const useIngredientEnhancements = (
   }
 
   const applyIngredientEnhancements = async () => {
-  console.log('[useIngredientEnhancements] applyIngredientEnhancements called')
-  console.log('import.meta.client:', import.meta.client)
 
-  const root = contentRoot.value
-  console.log('[useIngredientEnhancements] root element:', root, 'tagName:', root?.tagName, 'className:', root?.className)
-  if(!root) {
-    console.log('[useIngredientEnhancements] contentRoot not set')
-    return
-  }
+    const root = contentRoot.value
+    if(!root) {
+      return
+    }
 
-try {
-    ingredientIndex = getIngredientIndexFromDom(root)
-  } catch (error) {
-    console.error('[useIngredientEnhancements] Error in getIngredientIndexFromDom:', error)
-  }
+    try {
+      ingredientIndex = getIngredientIndexFromDom(root)
+    } catch (error) {
+      console.error('[useIngredientEnhancements] Error in getIngredientIndexFromDom:', error)
+    }
     
     markIngredientsSection(root)
-    enhanceDirectionsWithIngredientButtons(root, ingredientIndex)
+    if(ingredientIndex !== null) {
+      enhanceDirectionsWithIngredientButtons(root, ingredientIndex)
+    }
 
     if(!clickListenerAttached) {
       root.addEventListener('click', onRecipeContentClick)

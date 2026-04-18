@@ -26,10 +26,10 @@ const { hasToc = false } = Astro.props;
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 1.5rem;
-}
 
-.app-shell.has-toc {
-  grid-template-columns: 300px minmax(0, 1fr) 260px;
+  &.has-toc {
+    grid-template-columns: 300px minmax(0, 1fr) 260px;
+  }
 }
 
 .content-area {

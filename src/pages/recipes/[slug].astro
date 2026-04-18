@@ -113,7 +113,7 @@ const nav = await getRecipeNavigation(slug);
   <RecipeContentEnhancer client:load slug={slug} />
 </BaseLayout>
 
-<style>
+<style lang="scss">
   .recipe-page {
     max-width: 860px;
   }
@@ -140,6 +140,14 @@ const nav = await getRecipeNavigation(slug);
     border-radius: calc(var(--radius) + 4px);
     padding: clamp(1.25rem, 3vw, 2rem);
     box-shadow: var(--shadow);
+
+    > :first-child {
+      margin-top: 0;
+    }
+    
+    > :last-child {
+      margin-bottom: 0;
+    }
   }
 
   :deep(.recipe-content h2),

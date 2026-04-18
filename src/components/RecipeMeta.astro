@@ -45,7 +45,7 @@ const { prepTime, cookTime, totalTime, servings, difficulty } = Astro.props
   )}
 </dl>
 
-<style>
+<style lang="scss">
   .recipe-meta {
     display: flex;
     flex-wrap: wrap;
@@ -58,21 +58,21 @@ const { prepTime, cookTime, totalTime, servings, difficulty } = Astro.props
     align-items: center;
     gap: 0.5rem;
     background: var(--panel-soft);
-    border: 1px solid var(--border-soft);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 0.45rem 0.8rem;
-  }
-
-  .recipe-meta__item dt {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-  }
-
-  .recipe-meta__item dd {
-    margin: 0;
-    font-weight: 600;
-    color: var(--text);
+  
+    dt {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+  
+    dd {
+      margin: 0;
+      font-weight: 600;
+      color: var(--text);
+    } 
   }
 </style>

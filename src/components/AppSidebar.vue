@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { formatCategory } from '@/utils/formatCategory'
+import { formatTaxName } from '@/utils/formatTaxName'
 
 interface SidebarItem {
   title: string
@@ -46,6 +46,7 @@ let mql: MediaQueryList | null = null
 const mqlHandler = () => syncViewport()
 
 const syncViewport = () => {
+  // @ts-ignore
   if(!import.meta.client) {
     return
   }
@@ -55,6 +56,7 @@ const syncViewport = () => {
 }
 
 onMounted(() => {
+  // @ts-ignore
   if(!import.meta.client) {
     return
   }
@@ -176,10 +178,12 @@ const toggleCategory = (cat: string) => {
         <nav class="sidebar__nav" aria-label="Recipe navigation">
           <section v-for="(group, category) in groupedItems" :key="category" class="sidebar__group">
             <h2 class="sidebar__heading" @click="toggleCategory(category)">
-              <a :href="`/categories/${category}/`" @click.stop>{{ formatCategory(category) }}</a>
-              <svg class="sidebar__arrow" :class="{ 'is-open': isCategoryOpen(category) }" width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <a :href="`/categories/${category}/`" @click.stop>{{ formatTaxName(category) }}</a>
+              <button class="sidebar__heading-trigger" :class="{ 'is-open': isCategoryOpen(category) }" aria-label="Toggle category">
+                <svg class="sidebar__arrow" width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </h2>
             <Transition
               name="sidebar-accordion"
@@ -324,19 +328,29 @@ const toggleCategory = (cat: string) => {
   color: inherit;
 }
 
-.sidebar__arrow {
-  transition: transform 0.15s ease;
-  margin-left: 0.5rem;
+.sidebar__heading-trigger {
+  display: grid;
+  place-content: center;
+  border: 0;
+  background: var(--muted);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
 }
 
-.sidebar__arrow.is-open {
+.sidebar__heading-trigger > svg {
+  transition: transform 0.15s ease;
+}
+
+.sidebar__heading-trigger.is-open > svg {
   transform: rotate(180deg);
 }
 
 .sidebar-accordion-enter-active,
 .sidebar-accordion-leave-active {
   overflow: hidden;
-  transition: height 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: height 300ms ease-in-out;
   will-change: height;
 }
 

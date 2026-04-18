@@ -47,7 +47,7 @@ const { links } = Astro.props
   </aside>
 )}
 
-<style>
+<style lang="scss">
   .toc {
     position: sticky;
     top: 1.5rem;
@@ -58,6 +58,10 @@ const { links } = Astro.props
     border-radius: 22px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-soft);
+
+    @media (max-width: 860px) {
+      display: none;
+    }
   }
 
   .toc__scroll {
@@ -128,26 +132,27 @@ const { links } = Astro.props
     border-left: 2px solid transparent;
     border-radius: 4px;
     transition: all 150ms ease;
-  }
-
-  .toc__link:hover {
-    color: var(--accent);
-    background: var(--surface-subtle);
-  }
-
-  .toc__link.depth-1 {
-    font-weight: 700;
-    padding-left: 0rem;
-  }
-
-  .toc__link.depth-2 {
-    font-size: 0.9em;
-    padding-left: 0rem;
-  }
-
-  .toc__link.depth-3 {
-    font-size: 0.85em;
-    padding-left: 1.5rem;
-    color: var(--muted);
+  
+    &:hover {
+      color: var(--accent);
+      background: var(--surface-subtle);
+    }
+  
+    &.depth-1 {
+      font-weight: 700;
+      padding-left: 0rem;
+    }
+  
+    &.depth-2 {
+      font-weight: 700;
+      font-size: 0.9em;
+      padding-left: 0rem;
+    }
+  
+    &.depth-3 {
+      font-size: 0.85em;
+      padding-left: 1.5rem;
+      color: var(--muted);
+    }
   }
 </style>
