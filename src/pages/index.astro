@@ -4,28 +4,13 @@ import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import RecipeGrid from '@/components/RecipeGrid.astro';
 import { formatTaxName } from '@/utils/formatTaxName';
-import { getAllRecipes, getRecipesByCategory } from '@/lib/recipes';
-import type { RecipeEntry, RecipeItem } from '@/types/index';
+import { getRecipeItems, getRecipesByCategory } from '@/lib/recipes';
+import type { RecipeData } from '@/types/index';
 
 // Get all recipes and group by category
-const recipes = await getAllRecipes();
-const grouped = await getRecipesByCategory();
+const recipeItems: RecipeData[] = await getRecipeItems()
 
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    cookTime: recipe.data.cookTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
-});
-
-const groupedRecipes: Record<string, RecipeItem[]> = {};
+const groupedRecipes: Record<string, RecipeData[]> = {};
 recipeItems.forEach((item) => {
   if (!groupedRecipes[item.category]) {
     groupedRecipes[item.category] = [];

@@ -3,25 +3,13 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import TaxList from '@/components/TaxList.astro';
-import { getAllRecipes, getAllTags } from '@/lib/recipes';
-import type { RecipeItem, RecipeEntry } from '@/types/index';
+import { getRecipeItems, getAllRecipeEntries, getAllTags } from '@/lib/recipes';
+import type { RecipeData } from '@/types/index';
 
-const recipes = await getAllRecipes();
+const recipes = await getAllRecipeEntries();
 const tags = await getAllTags();
 
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    totalTime: recipe.data.totalTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
-});
+const recipeItems: RecipeData[] = await getRecipeItems()
 
 const tagCounts: Record<string, number> = {};
 recipes.forEach((recipe) => {

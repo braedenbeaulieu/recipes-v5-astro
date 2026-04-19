@@ -9,7 +9,6 @@ totalTime: 1 hr
 servings: 6
 difficulty: Easy
 tags:
-    - dinner
     - baked
     - comfort-food
 published: true

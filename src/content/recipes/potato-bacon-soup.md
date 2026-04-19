@@ -11,7 +11,6 @@ difficulty: Easy
 tags:
     - soup
     - comfort-food
-    - dinner
 published: true
 
 ---

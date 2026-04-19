@@ -9,7 +9,6 @@ totalTime: 3 hrs 20 mins
 servings: 6
 difficulty: Easy
 tags:
-    - dinner
     - bbq
     - oven
 published: true

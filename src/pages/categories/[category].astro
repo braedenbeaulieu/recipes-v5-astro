@@ -4,8 +4,8 @@ import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import RecipeGrid from '@/components/RecipeGrid.astro';
 import { formatTaxName } from '@/utils/formatTaxName';
-import { getAllRecipes, getRecipesInCategory, getAllCategories } from '@/lib/recipes';
-import type { RecipeEntry, RecipeItem } from '@/types/index';
+import { getRecipeItems, getRecipesInCategory, getAllCategories } from '@/lib/recipes';
+import type { RecipeData } from '@/types/index';
 
 export async function getStaticPaths() {
   const categories = await getAllCategories();
@@ -21,36 +21,9 @@ if (!category) {
   return new Response('Not found', { status: 404 });
 }
 
-const recipes = await getAllRecipes();
 const recipesInCategory = await getRecipesInCategory(category);
+const recipeItems: RecipeData[] = await getRecipeItems()
 
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    cookTime: recipe.data.cookTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
-});
-
-const recipeItemsInCategory: RecipeItem[] = recipesInCategory.map((recipe: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    cookTime: recipe.data.cookTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
-});
 ---
 
 <BaseLayout 
@@ -64,11 +37,11 @@ const recipeItemsInCategory: RecipeItem[] = recipesInCategory.map((recipe: Recip
 
     <main class="content-area">
       <header class="page-header">
-        <h1>{formatTaxName(category)}</h1>
-        <p>{recipeItemsInCategory.length} recipes</p>
+        <h1>Category: {formatTaxName(category)}</h1>
+        <p>{recipesInCategory.length} recipe{recipesInCategory.length > 1 ? 's' : ''}</p>
       </header>
 
-      <RecipeGrid recipes={recipeItemsInCategory} />
+      <RecipeGrid recipes={recipesInCategory} />
     </main>
   </AppShell>
 </BaseLayout>

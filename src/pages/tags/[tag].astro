@@ -3,8 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import RecipeGrid from '@/components/RecipeGrid.astro';
-import { getAllRecipes, getRecipesByTag, getAllTags } from '@/lib/recipes';
-import type { RecipeItem, RecipeEntry } from '@/types/index';
+import { getRecipeItems, getRecipesByTag, getAllTags } from '@/lib/recipes';
+import { formatTaxName } from '@/utils/formatTaxName';
+import type { RecipeData } from '@/types/index';
 
 export async function getStaticPaths() {
   const tags = await getAllTags();
@@ -20,22 +21,8 @@ if (!tag) {
   return new Response('Not found', { status: 404 });
 }
 
-const recipes = await getAllRecipes();
 const recipesWithTag = await getRecipesByTag(tag);
-
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    cookTime: recipe.data.cookTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
-});
+const recipeItems: RecipeData[] = await getRecipeItems()
 ---
 
 <BaseLayout 
@@ -49,8 +36,8 @@ const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
 
     <main class="content-area">
       <header class="page-header">
-        <h1>Tag: {tag}</h1>
-        <p>{recipesWithTag.length} recipes</p>
+        <h1>Tag: {formatTaxName(tag)}</h1>
+        <p>{recipesWithTag.length} recipe{recipesWithTag.length > 1 ? 's' : ''}</p>
       </header>
 
       <RecipeGrid recipes={recipesWithTag} />

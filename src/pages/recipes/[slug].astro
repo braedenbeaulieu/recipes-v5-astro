@@ -8,8 +8,8 @@ import RecipePageHeader from '@/components/RecipePageHeader.astro';
 import KeepAwakeToggle from '@/components/KeepAwakeToggle.vue';
 import GroceryListButton from '@/components/GroceryListButton.vue';
 import RecipeContentEnhancer from '@/components/RecipeContentEnhancer.vue';
-import { getAllRecipes, getRecipeBySlug, getRecipeNavigation, getAllCategories } from '@/lib/recipes';
-import type { RecipeEntry, RecipeItem } from '@/types/index';
+import { getRecipeEntryBySlug, getRecipeNavigation, getRecipeItems, getRecipeTotalTime } from '@/lib/recipes';
+import type { RecipeData } from '@/types/index';
 
 export async function getStaticPaths() {
   const recipes = await getCollection('recipes');
@@ -31,7 +31,7 @@ if (!slug) {
   return new Response('Not found', { status: 404 });
 }
 
-const recipe = await getRecipeBySlug(slug);
+const recipe = await getRecipeEntryBySlug(slug);
 
 if (!recipe) {
   return new Response('Not found', { status: 404 });
@@ -39,21 +39,7 @@ if (!recipe) {
 
 const { Content, headings } = await render(recipe);
 
-const recipes = await getAllRecipes();
-
-const recipeItems: RecipeItem[] = recipes.map((r: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    totalTime: recipe.data.totalTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
-});
+const recipeItems: RecipeData[] = await getRecipeItems()
 
 // Build TOC from headings
 const toc = headings.map((heading: any) => ({
@@ -65,6 +51,9 @@ const toc = headings.map((heading: any) => ({
 const currentPath = `/recipes/${slug}/`;
 
 const categorySlug = recipe.data.category || 'uncategorized';
+
+const totalTime = getRecipeTotalTime(recipe.data)
+recipe.data.totalTime = totalTime
 
 const nav = await getRecipeNavigation(slug);
 ---

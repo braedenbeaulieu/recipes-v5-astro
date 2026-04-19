@@ -4,7 +4,7 @@ import { formatTaxName } from '@/utils/formatTaxName'
 
 interface SidebarItem {
   title: string
-  path: string
+  path?: string
   category: string
 }
 

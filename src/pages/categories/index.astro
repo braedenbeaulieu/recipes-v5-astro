@@ -3,31 +3,22 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import TaxList from '@/components/TaxList.astro';
-import { formatTaxName } from '@/utils/formatTaxName';
-import { getAllRecipes, getRecipesByCategory } from '@/lib/recipes';
-import type { RecipeEntry, RecipeItem } from '@/types/index';
+import { getAllRecipeEntries, getRecipeItems, getAllCategories } from '@/lib/recipes';
+import type { RecipeData } from '@/types/index';
 
-const recipes = await getAllRecipes();
-const grouped = await getRecipesByCategory();
-
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
-  return {
-    title: recipe.data.title,
-    path: `/recipes/${recipe.data.slug}/`,
-    slug: recipe.data.slug,
-    category: recipe.data.category || 'uncategorized',
-    description: recipe.data.description,
-    prepTime: recipe.data.prepTime,
-    totalTime: recipe.data.totalTime,
-    servings: recipe.data.servings,
-    difficulty: recipe.data.difficulty
-  };
+const recipes = await getAllRecipeEntries();
+const recipeItems: RecipeData[] = await getRecipeItems()
+const categories = await getAllCategories();
+const categoryCounts: Record<string, number> = {};
+recipes.forEach((recipe) => {
+  if (recipe.data.category) {
+    categoryCounts[recipe.data.category] = (categoryCounts[recipe.data.category] || 0) + 1;
+  }
 });
 
-const categories = Object.entries(grouped).map(([slug, recipesInCat]) => ({
-  slug,
-  name: formatTaxName(slug),
-  count: recipesInCat.length
+const categorysList = categories.map((category) => ({
+  name: category,
+  count: categoryCounts[category] || 0
 }));
 ---
 
@@ -43,7 +34,7 @@ const categories = Object.entries(grouped).map(([slug, recipesInCat]) => ({
         <p>Browse recipes by category.</p>
       </header>
 
-      <TaxList slug="categories" terms={categories} />
+      <TaxList slug="categories" terms={categorysList} />
     </main>
   </AppShell>
 </BaseLayout>

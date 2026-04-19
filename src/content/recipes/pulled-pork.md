@@ -9,7 +9,6 @@ totalTime: 5 hrs 15 mins
 servings: 6
 difficulty: Easy
 tags:
-    - dinner
     - sandwiches
     - slow-cooker
 published: true

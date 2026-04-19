@@ -9,7 +9,6 @@ totalTime: 50 mins
 servings: 6
 difficulty: Easy
 tags:
-    - dinner
     - chili
     - comfort-food
 published: true

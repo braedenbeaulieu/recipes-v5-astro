@@ -11,7 +11,6 @@ difficulty: Easy
 tags:
     - soup
     - instant-pot
-    - dinner
 published: true
 ---
 

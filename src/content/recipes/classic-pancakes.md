@@ -9,7 +9,6 @@ totalTime: 25 mins
 servings: 4
 difficulty: Easy
 tags:
-  - breakfast
   - quick
 published: true
 ---

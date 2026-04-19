@@ -9,7 +9,6 @@ totalTime: 40 mins
 servings: 4
 difficulty: Easy
 tags:
-  - dinner
   - instant-pot
   - comfort-food
 published: true
