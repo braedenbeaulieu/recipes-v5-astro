@@ -1,10 +1,10 @@
 import { getCollection } from 'astro:content';
-import type { RecipeData, RecipeWithSlug } from '@/types/index';
+import type { RecipeData, RecipeEntry } from '@/types/index';
 
 /**
  * Get all published recipes sorted by title
  */
-export async function getAllRecipes(): Promise<RecipeWithSlug[]> {
+export async function getAllRecipes(): Promise<RecipeEntry[]> {
   const recipes = await getCollection('recipes', ({ data }) => data.published !== false);
   return recipes
     .map((recipe) => ({
@@ -50,7 +50,7 @@ export async function getAllTags(): Promise<string[]> {
 /**
  * Get recipes by tag
  */
-export async function getRecipesByTag(tag: string): Promise<RecipeWithSlug[]> {
+export async function getRecipesByTag(tag: string): Promise<RecipeEntry[]> {
   const recipes = await getAllRecipes();
   return recipes.filter(
     (recipe) => recipe.data.tags && recipe.data.tags.includes(tag)
@@ -60,7 +60,7 @@ export async function getRecipesByTag(tag: string): Promise<RecipeWithSlug[]> {
 /**
  * Get recipes by category (from frontmatter)
  */
-export async function getRecipesInCategory(category: string): Promise<RecipeWithSlug[]> {
+export async function getRecipesInCategory(category: string): Promise<RecipeEntry[]> {
   const recipes = await getAllRecipes();
   return recipes.filter(
     (recipe) => recipe.data.category === (category)
@@ -78,9 +78,9 @@ export async function getAllCategories(): Promise<string[]> {
 /**
  * Get recipe by slug (flat format)
  */
-export async function getRecipeBySlug(slug: string): Promise<RecipeWithSlug | undefined> {
+export async function getRecipeBySlug(slug: string): Promise<RecipeEntry | undefined> {
   const recipes = await getAllRecipes();
-  return recipes.find((recipe) => recipe.slug === slug);
+  return recipes.find((recipe) => recipe.data.slug === slug);
 }
 
 /**
@@ -88,7 +88,7 @@ export async function getRecipeBySlug(slug: string): Promise<RecipeWithSlug | un
  */
 export async function getRecipeNavigation(
   currentSlug: string
-): Promise<{ prev: RecipeWithSlug | null; next: RecipeWithSlug | null }> {
+): Promise<{ prev: RecipeEntry | null; next: RecipeEntry | null }> {
   const currentRecipe = await getRecipeBySlug(currentSlug);
   if (!currentRecipe) {
     return { prev: null, next: null };
@@ -96,7 +96,7 @@ export async function getRecipeNavigation(
 
   const category = currentRecipe.data.category || 'uncategorized';
   const recipesInCategory = await getRecipesInCategory(category);
-  const currentIndex = recipesInCategory.findIndex((r) => r.slug === currentSlug);
+  const currentIndex = recipesInCategory.findIndex((recipe) => recipe.data.slug === currentSlug);
 
   return {
     prev: currentIndex > 0 ? recipesInCategory[currentIndex - 1] : null,

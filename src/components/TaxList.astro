@@ -1,5 +1,8 @@
 ---
-import type { TaxTerm } from '../types/index'
+type TaxTerm = {
+  name: string
+  count: number
+}
 
 import { slugify } from '@/utils/slugify';
 import { formatTaxName } from '@/utils/formatTaxName';

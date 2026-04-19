@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Pizza Dough
+slug: pizza-dough
 description: High-hydration pizza dough with a light chew and crisp crust, suitable for multiple pizza sizes.
 prepTime: 30 mins
 cookTime: 20 mins

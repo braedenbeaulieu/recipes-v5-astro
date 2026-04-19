@@ -4,7 +4,7 @@ import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import RecipeGrid from '@/components/RecipeGrid.astro';
 import { getAllRecipes, getRecipesByTag, getAllTags } from '@/lib/recipes';
-import type { RecipeWithSlug } from '@/types/index';
+import type { RecipeItem, RecipeEntry } from '@/types/index';
 
 export async function getStaticPaths() {
   const tags = await getAllTags();
@@ -23,23 +23,11 @@ if (!tag) {
 const recipes = await getAllRecipes();
 const recipesWithTag = await getRecipesByTag(tag);
 
-interface RecipeItem {
-  title: string;
-  path: string;
-  slug: string;
-  category: string;
-  description?: string;
-  prepTime?: string;
-  cookTime?: string;
-  servings?: string | number;
-  difficulty?: string;
-}
-
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
+const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
   return {
     title: recipe.data.title,
-    path: `/recipes/${recipe.slug}/`,
-    slug: recipe.slug,
+    path: `/recipes/${recipe.data.slug}/`,
+    slug: recipe.data.slug,
     category: recipe.data.category || 'uncategorized',
     description: recipe.data.description,
     prepTime: recipe.data.prepTime,

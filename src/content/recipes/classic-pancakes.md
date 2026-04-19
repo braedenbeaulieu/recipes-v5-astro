@@ -1,6 +1,7 @@
 ---
 category: breakfast
 title: Classic Pancakes
+slug: classic-pancakes
 description: Fluffy stovetop pancakes with a simple batter.
 prepTime: 10 mins
 cookTime: 15 mins

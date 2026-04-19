@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Pulled Pork Sandwiches
+slug: pulled-pork
 description: Slow-braised pork shredded and tossed in a tangy, sweet BBQ-style sauce, served on soft rolls.
 prepTime: 15 mins
 cookTime: 5 hrs

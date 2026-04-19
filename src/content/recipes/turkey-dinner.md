@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Turkey Dinner
+slug: turkey-dinner
 description: Overnight baguette-style dough with long fermentation for a crusty oven bake.
 prepTime: 4 hrs
 cookTime: 4 hrs
@@ -11,7 +12,7 @@ tags:
     - dough
     - baking
     - bread
-published: true
+published: false
 ---
 
 ## Ingredients

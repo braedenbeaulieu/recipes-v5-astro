@@ -10,7 +10,7 @@ interface Props {
 const { recipe } = Astro.props
 ---
 
-<a href={`/recipes/${slugify(recipe.title)}/`} class="recipe-card">
+<a href={`/recipes/${recipe.slug}/`} class="recipe-card">
     <div>
         <div class="recipe-card__header">
             <h3 class="recipe-card__title">{recipe.title}</h3>

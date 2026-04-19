@@ -1,6 +1,7 @@
 ---
 category: dessert
 title: Brownie Bites
+slug: brownie-bites
 description: Small, fudgy brownies with shiny tops.
 prepTime: 15 mins
 cookTime: 14 mins

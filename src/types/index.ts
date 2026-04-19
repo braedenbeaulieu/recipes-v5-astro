@@ -1,22 +1,15 @@
 import type { CollectionEntry } from 'astro:content';
 
-export type Recipe = CollectionEntry<'recipes'>;
-export type RecipeData = Recipe['data'];
-
-export interface RecipeWithSlug extends Recipe {
+export type RecipeEntry = CollectionEntry<'recipes'>;
+export type RecipeData = RecipeEntry['data'];
+export interface RecipeItem {
+  title: string;
+  path: string;
   slug: string;
-}
-
-export interface CategoryRecipes {
-  [category: string]: RecipeWithSlug[];
-}
-
-export type TaxTerm = {
-  name: string
-  count: number
-}
-
-export interface TaxListProps {
-  terms: TaxTerm[]
-  slug: string
+  category: string;
+  description?: string;
+  prepTime?: string;
+  cookTime?: string;
+  servings?: string | number;
+  difficulty?: string;
 }

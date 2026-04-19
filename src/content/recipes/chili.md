@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Chili
+slug: chili
 description: Rich and filling chili made with ground beef, beans, mushrooms, and bold spices.
 prepTime: 10 mins
 cookTime: 40 mins

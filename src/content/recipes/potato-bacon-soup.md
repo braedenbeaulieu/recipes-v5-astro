@@ -1,7 +1,7 @@
 ---
 category: dinner
-
 title: Potato Bacon Soup
+slug: potato-bacon-soup
 description: Creamy, hearty potato soup loaded with crispy bacon and a rich herb cream base.
 prepTime: 20 mins
 cookTime: 30 mins

@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Shepherd's Pie
+slug: shepherds-pie
 description: Classic baked shepherd’s pie with seasoned beef, vegetables, and creamy mashed potatoes.
 prepTime: 20 mins
 cookTime: 40 mins

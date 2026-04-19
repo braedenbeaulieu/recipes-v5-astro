@@ -9,7 +9,7 @@ import KeepAwakeToggle from '@/components/KeepAwakeToggle.vue';
 import GroceryListButton from '@/components/GroceryListButton.vue';
 import RecipeContentEnhancer from '@/components/RecipeContentEnhancer.vue';
 import { getAllRecipes, getRecipeBySlug, getRecipeNavigation, getAllCategories } from '@/lib/recipes';
-import type { RecipeWithSlug } from '@/types/index';
+import type { RecipeEntry, RecipeItem } from '@/types/index';
 
 export async function getStaticPaths() {
   const recipes = await getCollection('recipes');
@@ -40,29 +40,18 @@ if (!recipe) {
 const { Content, headings } = await render(recipe);
 
 const recipes = await getAllRecipes();
-interface RecipeItem {
-  title: string;
-  path: string;
-  slug: string;
-  category: string;
-  description?: string;
-  prepTime?: string;
-  totalTime?: string;
-  servings?: string | number;
-  difficulty?: string;
-}
 
-const recipeItems: RecipeItem[] = recipes.map((r: RecipeWithSlug) => {
+const recipeItems: RecipeItem[] = recipes.map((r: RecipeEntry) => {
   return {
-    title: r.data.title,
-    path: `/recipes/${r.slug}/`,
-    slug: r.slug,
-    category: r.data.category || 'uncategorized',
-    description: r.data.description,
-    prepTime: r.data.prepTime,
-    totalTime: r.data.totalTime,
-    servings: r.data.servings,
-    difficulty: r.data.difficulty
+    title: recipe.data.title,
+    path: `/recipes/${recipe.data.slug}/`,
+    slug: recipe.data.slug,
+    category: recipe.data.category || 'uncategorized',
+    description: recipe.data.description,
+    prepTime: recipe.data.prepTime,
+    totalTime: recipe.data.totalTime,
+    servings: recipe.data.servings,
+    difficulty: recipe.data.difficulty
   };
 });
 

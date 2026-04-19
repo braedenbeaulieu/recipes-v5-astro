@@ -1,7 +1,7 @@
 ---
 category: dinner
-
 title: Teriyaki Pork & Rice
+slug: teriyaki-pork-rice
 description: Savory wok-fried rice with eggs and bean sprouts, paired with glazed teriyaki pork slices.
 prepTime: 10 mins
 cookTime: 25 mins

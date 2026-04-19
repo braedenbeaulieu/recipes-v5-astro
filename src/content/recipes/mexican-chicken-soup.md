@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Mexican Chicken Soup
+slug: mexican-chicken-soup
 description: Flavorful slow-cooked chicken soup with beans, corn, and Tex-Mex toppings.
 prepTime: 10 mins
 cookTime: 5 hrs

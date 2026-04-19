@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Fall Off the Bone Ribs
+slug: ribs
 description: Tender oven-baked pork ribs finished under the broiler with caramelized BBQ sauce.
 prepTime: 10 mins
 cookTime: 3 hrs 10 mins

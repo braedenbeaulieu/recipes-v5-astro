@@ -5,29 +5,17 @@ import AppSidebar from '@/components/AppSidebar.vue';
 import RecipeGrid from '@/components/RecipeGrid.astro';
 import { formatTaxName } from '@/utils/formatTaxName';
 import { getAllRecipes, getRecipesByCategory } from '@/lib/recipes';
-import type { RecipeWithSlug } from '@/types/index';
+import type { RecipeEntry, RecipeItem } from '@/types/index';
 
 // Get all recipes and group by category
 const recipes = await getAllRecipes();
 const grouped = await getRecipesByCategory();
 
-interface RecipeItem {
-  title: string;
-  path: string;
-  slug: string;
-  category: string;
-  description?: string;
-  prepTime?: string;
-  cookTime?: string;
-  servings?: string | number;
-  difficulty?: string;
-}
-
-const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
+const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeEntry) => {
   return {
     title: recipe.data.title,
-    path: `/recipes/${recipe.slug}/`,
-    slug: recipe.slug,
+    path: `/recipes/${recipe.data.slug}/`,
+    slug: recipe.data.slug,
     category: recipe.data.category || 'uncategorized',
     description: recipe.data.description,
     prepTime: recipe.data.prepTime,

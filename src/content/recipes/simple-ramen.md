@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Simple Chicken Ramen Bowl
+slug: simple-ramen
 description: Quick upgrades to Mr. Noodles ramen with seared chicken, soy-sesame broth, and fresh toppings.
 prepTime: 10 mins
 cookTime: 20 mins

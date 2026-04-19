@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Taco Dip
+slug: taco-dip
 description: Cheesy layered taco dip with seasoned beef, refried beans, and sour cream, perfect for scooping.
 prepTime: 20 mins
 cookTime: 40 mins

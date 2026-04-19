@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Same-Day Dutch Oven Bread
+slug: same-day-bread
 description: High-hydration artisan loaf made with fresh yeast, bulk fermented, shaped, and baked in a Dutch oven.
 prepTime: 2 hrs
 cookTime: 45 mins

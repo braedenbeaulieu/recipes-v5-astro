@@ -1,6 +1,7 @@
 ---
 category: dinner
 title: Beef Stroganoff
+slug: beef-stroganoff
 description: Hearty pressure-cooked beef soup with egg noodles, mushrooms, and a creamy finish.
 prepTime: 10 mins
 cookTime: 30 mins
