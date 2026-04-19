@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import type { RecipeData, RecipeWithSlug, Recipes } from '@/types/index';
+import type { RecipeData, RecipeWithSlug } from '@/types/index';
 
 /**
  * Get all published recipes sorted by title
@@ -17,9 +17,9 @@ export async function getAllRecipes(): Promise<RecipeWithSlug[]> {
 /**
  * Get recipes grouped by category (from frontmatter)
  */
-export async function getRecipesByCategory(): Promise<Recipes> {
+export async function getRecipesByCategory(): Promise<RecipeData[]> {
   const recipes = await getAllRecipes();
-  const grouped: Recipes = {};
+  const grouped: RecipeData[] = {};
 
   for (const recipe of recipes) {
     const category = recipe.data.category || 'uncategorized';
@@ -63,7 +63,7 @@ export async function getRecipesByTag(tag: string): Promise<RecipeWithSlug[]> {
 export async function getRecipesInCategory(category: string): Promise<RecipeWithSlug[]> {
   const recipes = await getAllRecipes();
   return recipes.filter(
-    (recipe) => recipe.data.category === category
+    (recipe) => recipe.data.category === (category)
   );
 }
 

@@ -21,6 +21,7 @@ let wakeLock: WakeLockSentinelLike | null = null
 let wakeLockRetryArmed = false
 
 const supportsWakeLock = computed(() => {
+  // @ts-ignore
   if(!import.meta.client) {
     return false
   }
@@ -29,6 +30,7 @@ const supportsWakeLock = computed(() => {
 })
 
 const disarmWakeLockRetry = () => {
+  // @ts-ignore
   if(!import.meta.client || !wakeLockRetryArmed) {
     return
   }
@@ -39,6 +41,7 @@ const disarmWakeLockRetry = () => {
 }
 
 const scheduleWakeLockRetry = () => {
+  // @ts-ignore
   if(!import.meta.client || wakeLockRetryArmed) {
     return
   }
@@ -57,6 +60,7 @@ const onWakeLockRetryGesture = () => {
 }
 
 const requestWakeLock = async () => {
+  // @ts-ignore
   if(!import.meta.client || !keepScreenAwake.value || wakeLock) {
     return
   }
@@ -102,6 +106,7 @@ const releaseWakeLock = async () => {
 }
 
 const onVisibilityChange = () => {
+  // @ts-ignore
   if(!import.meta.client) {
     return
   }
@@ -120,6 +125,7 @@ const onPageHide = () => {
 }
 
 onMounted(() => {
+  // @ts-ignore
   if(!import.meta.client) {
     return
   }
@@ -142,6 +148,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  // @ts-ignore
   if(import.meta.client) {
     document.removeEventListener('visibilitychange', onVisibilityChange)
     window.removeEventListener('pagehide', onPageHide)
@@ -152,6 +159,7 @@ onBeforeUnmount(() => {
 })
 
 watch(keepScreenAwake, (value) => {
+  // @ts-ignore
   if(!import.meta.client) {
     return
   }

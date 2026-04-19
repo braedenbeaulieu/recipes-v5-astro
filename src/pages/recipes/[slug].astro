@@ -134,63 +134,6 @@ const nav = await getRecipeNavigation(slug);
     }
   }
 
-  .recipe-content {
-    background: var(--surface-raised);
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) + 4px);
-    padding: clamp(1.25rem, 3vw, 2rem);
-    box-shadow: var(--shadow);
-
-    > :first-child {
-      margin-top: 0;
-    }
-    
-    > :last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  :deep(.recipe-content h2),
-  :deep(.recipe-content h3),
-  :deep(.recipe-content h4) {
-    scroll-margin-top: 1.5rem;
-  }
-
-  :deep(.recipe-content h2) {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 0.5rem;
-  }
-
-  :deep(.recipe-content h3) {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-  }
-
-  :deep(.recipe-content h4) {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-  }
-
-  :deep(.recipe-content ul),
-  :deep(.recipe-content ol) {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
-  }
-
-  :deep(.recipe-content li) {
-    margin: 0.5rem 0;
-  }
-
-  :deep(.recipe-content p) {
-    margin: 1rem 0;
-    line-height: 1.6;
-  }
-
   .recipe-actions-container {
     display: flex;
     gap: 0.5rem;

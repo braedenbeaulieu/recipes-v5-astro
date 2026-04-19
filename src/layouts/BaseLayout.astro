@@ -20,20 +20,6 @@ const { title = 'Recipes', description = 'Browse recipes.' } = Astro.props;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <style lang="scss">
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        overflow-y: scroll;
-      }
-      body {
-        font-family: system-ui, -apple-system, sans-serif;
-        background-color: var(--surface);
-        color: var(--text);
-      }
-    </style>
   </head>
   <body>
     <slot />

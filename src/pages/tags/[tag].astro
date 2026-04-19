@@ -16,8 +16,6 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 
-console.log(tag)
-
 if (!tag) {
   return new Response('Not found', { status: 404 });
 }

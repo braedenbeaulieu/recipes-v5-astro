@@ -162,6 +162,7 @@ const onKeydown = (event: KeyboardEvent) => {
 }
 
 watch(isOpen, (value) => {
+  // @ts-ignore
   if(!import.meta.client) {
     return
   }

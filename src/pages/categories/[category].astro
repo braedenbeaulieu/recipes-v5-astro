@@ -4,7 +4,6 @@ import AppShell from '@/components/AppShell.astro';
 import AppSidebar from '@/components/AppSidebar.vue';
 import RecipeGrid from '@/components/RecipeGrid.astro';
 import { formatTaxName } from '@/utils/formatTaxName';
-import { formatDuration } from '@/utils/formatDuration';
 import { getAllRecipes, getRecipesInCategory, getAllCategories } from '@/lib/recipes';
 import type { RecipeWithSlug } from '@/types/index';
 
@@ -50,11 +49,25 @@ const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
     difficulty: recipe.data.difficulty
   };
 });
+
+const recipeItemsInCategory: RecipeItem[] = recipesInCategory.map((recipe: RecipeWithSlug) => {
+  return {
+    title: recipe.data.title,
+    path: `/recipes/${recipe.slug}/`,
+    slug: recipe.slug,
+    category: recipe.data.category || 'uncategorized',
+    description: recipe.data.description,
+    prepTime: recipe.data.prepTime,
+    cookTime: recipe.data.cookTime,
+    servings: recipe.data.servings,
+    difficulty: recipe.data.difficulty
+  };
+});
 ---
 
 <BaseLayout 
   title={`${formatTaxName(category)} Recipes`} 
-  description={`Browse ${formatTaxName(category).toLowerCase()} recipes.`}
+  description={`Browse ${formatTaxName(category)} recipes.`}
 >
   <AppShell>
     <fragment slot="sidebar">
@@ -64,10 +77,10 @@ const recipeItems: RecipeItem[] = recipes.map((recipe: RecipeWithSlug) => {
     <main class="content-area">
       <header class="page-header">
         <h1>{formatTaxName(category)}</h1>
-        <p>{recipesInCategory.length} recipes</p>
+        <p>{recipeItemsInCategory.length} recipes</p>
       </header>
 
-      <RecipeGrid recipes={recipesInCategory} />
+      <RecipeGrid recipes={recipeItemsInCategory} />
     </main>
   </AppShell>
 </BaseLayout>

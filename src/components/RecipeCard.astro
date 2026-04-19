@@ -8,7 +8,6 @@ interface Props {
 }
 
 const { recipe } = Astro.props
-console.log(recipe)
 ---
 
 <a href={`/recipes/${slugify(recipe.title)}/`} class="recipe-card">
