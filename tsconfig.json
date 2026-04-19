@@ -2,11 +2,19 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "jsxImportSource": "vue",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["astro/client"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "astro/client"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
   "include": [
@@ -15,7 +23,11 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.astro",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "./worker-configuration.d.ts"
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

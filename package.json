@@ -5,16 +5,22 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "generate-types": "wrangler types"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@astrojs/cloudflare": "^13.1.10",
     "@astrojs/vue": "^6.0.1",
     "astro": "^6.1.7",
     "sass": "^1.99.0",
+    "wrangler": "^4.83.0",
     "zod": "^3.25.76"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
