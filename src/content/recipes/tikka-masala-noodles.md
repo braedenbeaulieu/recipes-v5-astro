@@ -1,5 +1,6 @@
 ---
-
+category: dinner
+slug: tikka-masala-noodles
 title: Tikka Masala Noodles
 description: Creamy coconut tikka masala with tender chicken tossed with egg noodles.
 prepTime: 10 mins
@@ -16,11 +17,11 @@ published: true
 
 ## Ingredients
 
-* 1 can full-fat coconut milk
-* 2 chicken breasts
-* 4 cups egg noodles
-* 1 package Patak's tikka masala paste
-* Salt, to taste
+- 1 can full-fat coconut milk
+- 2 chicken breasts
+- 4 cups egg noodles
+- 1 package Patak's tikka masala paste
+- Salt, to taste
 
 ## Directions
 

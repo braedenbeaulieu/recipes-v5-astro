@@ -5,15 +5,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "generate-types": "wrangler types"
+    "preview": "astro preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@astrojs/cloudflare": "^13.1.10",
     "@astrojs/vue": "^6.0.1",
     "astro": "^6.1.7",
     "sass": "^1.99.0",
