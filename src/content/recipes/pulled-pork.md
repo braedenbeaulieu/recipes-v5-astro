@@ -2,7 +2,7 @@
 category: dinner
 title: Pulled Pork Sandwiches
 slug: pulled-pork
-description: Slow-braised pork shredded and tossed in a tangy, sweet BBQ-style sauce, served on soft rolls.
+description: Slow-cooked pork shredded and tossed in a tangy, sweet BBQ-style sauce, served on soft rolls.
 prepTime: 15 mins
 cookTime: 5 hrs
 totalTime: 5 hrs 15 mins
@@ -20,7 +20,7 @@ published: true
 - 1 cup **ketchup**
 - 2 1/2 tablespoons **brown sugar**
 - 2 1/2 tablespoons **apple cider vinegar**
-- 2 cups **apple juice**
+- 2 cups **chicken stock**
 - 1 1/2 tablespoons **Worcestershire sauce**
 - 1 tablespoon **spicy mustard**
 - 1 1/2 teaspoons **cumin**
@@ -31,11 +31,7 @@ published: true
 
 ## Tools
 
-- Dutch oven with lid
-- Oven
-- Mixing bowl
-- Forks for shredding
-- Wooden spoon or spatula
+- Instant Pot or other Slow Cooker
 
 ## Directions
 
@@ -43,13 +39,13 @@ published: true
 
 Mix cumin, chili powder, onion powder, garlic powder, and half of the brown sugar in a bowl. Cut the pork tenderloin in half and coat it fully with the spice mixture.
 
-### Sear and braise
+### Sear and slow cook
 
-Sear the pork in a Dutch oven, browning all sides. Add the apple juice, cover, and place in the oven for 3 hours. Remove the lid and continue cooking for another 2 hours, until the pork is fork-tender.
+Sear the pork in the Instant Pot, browning all sides. Add the chicken stock, cover, and slow cook for 5 hours until it is between 195F - 205F.
 
 ### Make the sauce
 
-Remove the pork to rest. In the remaining drippings, stir in ketchup, spicy mustard, Worcestershire sauce, apple cider vinegar, and the remaining brown sugar. Simmer over medium-high heat until thickened.
+Set the pork aside to rest. In the remaining drippings, stir in ketchup, spicy mustard, Worcestershire sauce, apple cider vinegar, and the remaining brown sugar. Simmer over medium-high heat until thickened.
 
 ### Shred and combine
 
@@ -61,5 +57,4 @@ Serve the pulled pork on kaiser rolls.
 
 ## Notes
 
-- Watch the apple juice carefully in the early stages to prevent burning.
 - For extra flavour, let the shredded pork sit in the sauce for 10–15 minutes before serving.
