@@ -312,6 +312,8 @@ onMounted(() => {
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--content-bg);
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .grocery-modal__list-item {

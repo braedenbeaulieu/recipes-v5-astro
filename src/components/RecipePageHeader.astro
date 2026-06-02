@@ -10,6 +10,16 @@ interface Props {
 }
 
 const { recipePage, categorySlug } = Astro.props
+
+const decodeHtmlEntities = (value: string) =>
+  value
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
 ---
 
 <header class="page-header page-header--recipe">
@@ -17,7 +27,7 @@ const { recipePage, categorySlug } = Astro.props
     <a href={`/categories/${categorySlug}/`}>{formatTaxName(categorySlug)}</a>
   </p>
   <h1>{recipePage.title}</h1>
-  {recipePage.description && <p>{recipePage.description}</p>}
+  {recipePage.description && <p>{decodeHtmlEntities(recipePage.description)}</p>}
   {recipePage.tags?.length && (
     <p class="recipe-tags">
       <span class="screen-reader-text">Tags</span>
