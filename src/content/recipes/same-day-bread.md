@@ -41,9 +41,11 @@ published: true
 
 In a large bowl, combine water, fresh yeast, and sugar/honey (if using). Stir to dissolve.
 
-Add bread flour and mix until no dry flour remains. Let rest for 5–10 minutes.
+Add bread flour and mix until almost no dry flour remains.
 
-Add salt and oil, then mix until fully incorporated and a shaggy dough forms.
+Once the flour is mostly hydrated add salt and continue mixing. Then add the oil, then mix until fully incorporated and the dough ball forms and looks smooth. Tip: Add a tiny bit of All-Purpose flour into the dough if the oil is too much in the bowl, it will dry up.
+
+Turn it onto a lightly floured surface and continue kneading by hand for about 10 minutes. The dough should look smooth.
 
 ### Bulk fermentation
 
@@ -74,27 +76,24 @@ The dough is ready when:
 
 ### Turn out and handle
 
-Lightly flour your work surface. Gently turn the dough out. If large surface bubbles appear, carefully pop them without fully deflating the dough.
-
-### Pre-shape
-
-Shape the dough loosely into a round (boule) or log (batard). Create light tension without overworking the dough.
+Lay down parchment paper, lightly flour the work surface. Gently turn the dough out so the top is down. If large surface bubbles appear, carefully pop them without fully deflating the dough.
 
 Rest uncovered for 15 minutes so it relaxes.
 
-### Final shape
+### Shape
 
-Shape into final loaf:
+Shape into a loaf:
 
-- Pull edges inward
-- Build surface tension
-- Seal seam underneath
+- Make a rectangle shape using your finger tips, be gentle
+- Pull top and bottom edges inward to make a roll
+- Pull the left and right sides in just enough to seal them off
+- Pinch the seam so it is sealed then roll it over seam-side down
 
 Handle gently to preserve gas.
 
 ### Final proof
 
-Place seam-side down on parchment paper and cover lightly. Proof for 45–75 minutes.
+Place seam-side down on parchment paper and cover lightly. Proof for 45–75 minutes (do this while you are perheating the oven).
 
 Ready to bake when:
 
@@ -117,7 +116,7 @@ Bake:
 
 ### Cool
 
-Remove loaf and cool on a rack for at least 1 hour before slicing.
+Remove loaf and cool for at least 1 hour before slicing. Ideally 4 hours
 
 ## Notes
 
